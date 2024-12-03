@@ -1,0 +1,99 @@
+access-control-allow-credentials: true
+bir acces-control açığı sunucudaki verilerin yanlış yönlendirilmesine yol açabilir buda kullanıcı çerezlerinin farkli web siteler vasıtasıyla üzerinden cookiler size gelir
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Credentials Test</title>
+</head>
+<body>
+    <h1>CORS Credentials Test</h1>
+    <button id="testButton">Test API</button>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById("testButton").addEventListener("click", async () => {
+            const output = document.getElementById("output");
+            output.textContent = "Testing...";
+
+            try {
+                const response = await fetch("http://ichnaea-web.netflix.com/some-endpoint", {
+                    method: "GET",
+                    credentials: "include", // Include cookies in the request
+                    headers: {
+                        "Origin": "http://malicious.com" // Set a custom origin for testing
+                    }
+                });
+
+                const data = await response.text();
+
+                output.textContent = `Response Status: ${response.status}\nResponse Body: ${data}`;
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+Eğer Access-Control-Allow-Credentials: true başlığı olan bir API'yi test etmek için bir "Not Defteri" dosyası (örneğin .html dosyası) oluşturmak istiyorsanız, JavaScript içeren bir HTML dosyası ile test yapabilirsiniz. Bu dosya, bir fetch isteği yaparak aynı zamanda çerezleri (credentials) göndermeyi dener.
+
+Aşağıdaki kodu kullanabilirsiniz:
+
+HTML Kod (not defteri için uygun)
+Kaydedilecek dosya adı: cors-test.html
+
+html
+Kodu kopyala
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Credentials Test</title>
+</head>
+<body>
+    <h1>CORS Credentials Test</h1>
+    <button id="testButton">Test API</button>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById("testButton").addEventListener("click", async () => {
+            const output = document.getElementById("output");
+            output.textContent = "Testing...";
+
+            try {
+                const response = await fetch("http://ichnaea-web.netflix.com/some-endpoint", {
+                    method: "GET",
+                    credentials: "include", // Include cookies in the request
+                    headers: {
+                        "Origin": "http://malicious.com" // Set a custom origin for testing
+                    }
+                });
+
+                const data = await response.text();
+
+                output.textContent = `Response Status: ${response.status}\nResponse Body: ${data}`;
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+Nasıl Kullanılır?
+Yukarıdaki kodu bir .html dosyası olarak kaydedin (örneğin, cors-test.html).
+Dosyayı tarayıcınızda açın.
+Görünen "Test API" butonuna tıklayın.
+Tarayıcı, belirttiğiniz Origin (http://malicious.com) ile API'ye bir fetch isteği gönderir ve sonucu görüntüler.
+Çalışma Mekanizması
+credentials: "include": Çerezlerin gönderilmesini sağlar.
+Origin başlığı: Sunucuya sahte bir köken bildirimi yapılır (http://malicious.com).
+Yanıt Analizi: Sunucu doğru yapılandırılmışsa, bu tür bir istek reddedilmelidir.
