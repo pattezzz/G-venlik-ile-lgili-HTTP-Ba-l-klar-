@@ -1,0 +1,59 @@
+CORS ile İlgili Başlıklar
+access-control-allow-credentials: true
+
+Tarayıcının, kimlik doğrulama bilgileri (örneğin, çerezler veya HTTP kimlik doğrulama başlıkları) içeren istekleri kabul etmesine izin verir.
+access-control-allow-headers
+
+İzin verilen özel başlıkların bir listesidir. Bu başlıklar, istek sırasında gönderilebilecek ek bilgileri tanımlar.
+Örneğin:
+Authorization: Kimlik doğrulama bilgileri taşır.
+Content-Type: Gönderilen verilerin türünü belirtir.
+Netflix'e özgü özel başlıklar (ör. X-Netflix.application.name, X-Netflix.user.id) da vardır.
+access-control-allow-methods: GET, POST, OPTIONS
+
+Bu başlık, sunucunun hangi HTTP yöntemlerini desteklediğini belirtir. Burada GET, POST ve OPTIONS yöntemlerine izin verildiği belirtilmiştir.
+access-control-allow-origin: http://example.com
+
+İzin verilen kaynakları tanımlar. Bu durumda, yalnızca http://example.com adresinden gelen isteklere izin verilmiştir.
+vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+
+Sunucu yanıtının hangi başlıklara göre değişebileceğini belirtir. Burada istek Origin, Access-Control-Request-Method, ve Access-Control-Request-Headers başlıklarına göre özelleştirilmiştir.
+Diğer Güvenlik Başlıkları
+x-content-type-options: nosniff
+
+Tarayıcıların içerik türlerini tahmin etmesini engeller, XSS (Cross-Site Scripting) ve MIME tabanlı saldırılara karşı koruma sağlar.
+x-frame-options: DENY
+
+Kaynağın, iframe veya frame içinde başka bir sitede yüklenmesini tamamen engeller. Clickjacking saldırılarına karşı koruma sağlar.
+x-xss-protection: 0
+
+Tarayıcının dahili XSS koruma mekanizmasını devre dışı bırakır. Bu, sunucunun özel bir güvenlik mekanizmasına sahip olduğu varsayımıyla yapılabilir.
+Önbellek Yönetimi Başlıkları
+cache-control: no-cache, no-store, max-age=0, must-revalidate
+
+Yanıtın tarayıcıda veya aracı sunucularda önbelleğe alınmamasını garanti eder.
+pragma: no-cache
+
+Eski tarayıcılar için önbelleğe alınmayı engeller.
+expires: 0
+
+Bu yanıtın hemen süresinin dolduğunu belirtir.
+Diğer Bilgilendirme Başlıkları
+allow: GET, POST, OPTIONS
+
+Sunucunun desteklediği HTTP yöntemlerini belirtir. Bu, access-control-allow-methods ile aynı bilgiyi içerir ancak CORS dışında genel izinler için kullanılır.
+x-originating-url: http://ichnaea-web.netflix.com/
+
+İsteğin orijinal URL'sini belirtir.
+server: envoy
+
+Sunucunun kullandığı proxy veya ara yazılımın adı: Envoy.
+via: 1.1 i-089736fdd9e32ba34 (eu-west-1)
+
+İsteğin geçtiği ara sunucuların veya proxy’lerin bir listesi. Burada isteğin eu-west-1 AWS bölgesindeki bir sunucudan geçtiği belirtiliyor.
+x-envoy-upstream-service-time: 1
+
+Sunucunun bu isteği işlemek için geçen süreyi (milisaniye olarak) belirtir.
+x-b3-traceid ve x-request-id
+
+Sunucuya gelen isteğin izlenmesini sağlamak için kullanılan benzersiz kimliklerdir.
